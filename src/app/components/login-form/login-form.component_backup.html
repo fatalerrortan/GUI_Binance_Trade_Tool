@@ -1,0 +1,61 @@
+<form [formGroup]="login_form" (ngSubmit)="onSubmit()">
+    <div formGroupName="taapi" class="form-control">
+        <h2>taapi</h2>
+        <label for="taapi_api_key">taapi api key: </label>
+        <input id="taapi_api_key" type="text" name="taapi_api_key" formControlName="taapi_api_key" />
+        <br>
+        <label for="taapi_api_url">taapi api url: </label>
+        <input id="taapi_api_url" type="text" name="taapi_api_url" formControlName="taapi_api_url" />
+    </div>
+
+    <div formGroupName="binance" class="form-control">
+        <h2>binance</h2>
+        <label for="binance_api_key">binance api key: </label>
+        <input id="binance_api_key" type="text" name="binance_api_key" formControlName="binance_api_key" />
+        <br>
+        <label for="binance_secret_key">binance secret key: </label>
+        <input id="binance_secret_key" type="password" name="binance_secret_key" formControlName="binance_secret_key" />
+        <br>
+        <label for="binance_api_url">binance api url: </label>
+        <input id="binance_api_url" type="text" name="binance_api_url" formControlName="binance_api_url" />
+    </div>
+
+    <div formGroupName="exe_config" class="form-control">
+        <h2>execution config</h2>
+
+        <label for="trade_tool_url">binance trade tool server url: </label>
+        <input id="trade_tool_url" type="text" name="trade_tool_url" formControlName="trade_tool_url" />
+        <br>
+        <label for="exe_mode">execution mode: </label>
+        <select formControlName="exe_mode">
+            <option *ngFor="let option of exe_mode_options" [ngValue]="option">
+                {{ option.name }}
+        </select>
+        <br>
+        <label for="candle_interval">candle interval: </label>
+        <select formControlName="candle_interval">
+            <option *ngFor="let option of candle_interval_options" [ngValue]="option">
+                {{ option.name }}
+        </select>
+        <br>
+        <label for="current_orders">check current orders: </label>
+        <select formControlName="current_orders">
+            <option *ngFor="let option of current_orders_options" [ngValue]="option">
+                {{ option.name }}
+        </select>
+        <br>
+        <label for="trade_rule">trade rule: </label>
+        <input formControlName="trade_rule" type="file" name="trade_rule" accept=".json" (change)="onFileChange($event)" />
+    </div>
+    <div>
+        <button type="submit" [disabled]="!login_form.valid">Run</button>
+    </div>
+    <div>
+        <button type="button" (click)="stop()">Stop</button>
+    </div>
+</form>
+
+
+<!-- <p>Value: {{ taapi_api_key.value }}</p> -->
+
+<!-- <button (click)="updateName()">Update Name</button> -->

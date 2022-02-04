@@ -1,0 +1,114 @@
+<div class="container">
+    <div class="row">
+        <div class="col-8 offset-2">
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{active: isNewRun_view}" [ngClass]="{disabled: attach_active}" href="#" (click)="activate_newrun()" >NEW RUN</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" [ngClass]="{active: isAttach_view}" [ngClass]="{disabled: newrun_active}" href="#" (click)="activate_attach()" >ATTACH</a>
+                </li>
+              </ul>
+     
+            <form [formGroup]="login_newrun_form" (ngSubmit)="onSubmit_newrun()" *ngIf="exe_mode == 'newrun'" >
+                
+                <div formGroupName="connection" class="form-control">
+                    
+                    <div class="form-group">
+                        <label for="host_url">Host<small *ngIf="host_url.invalid" class="input_error">*</small></label>
+                        <input type="text" class="form-control" id="host_url" aria-describedby="host" formControlName="host_url" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taapi_api_key">Taapi API Key<small *ngIf="taapi_api_key.invalid" class="input_error">*</small></label>
+                        <input type="text" class="form-control" id="taapi_api_key" aria-describedby="taapi api key" formControlName="taapi_api_key" required>
+                        <!-- <small *ngIf="taapi_api_key.invalid" class="form-text text-muted">TEST!!!</small> -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="binance_api_key">Binance API Key<small *ngIf="binance_api_key.invalid" class="input_error">*</small></label>
+                        <input type="text" class="form-control" id="binance_api_key" aria-describedby="Binance API Key" formControlName="binance_api_key" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="binance_secret_key">Binance Secret Key<small *ngIf="binance_secret_key.invalid" class="input_error">*</small></label>
+                        <input type="password" class="form-control" id="binance_secret_key" aria-describedby="Binance Secret Key" formControlName="binance_secret_key" required>
+                    </div>
+                    
+                </div>
+
+                <div formGroupName="exe_config" class="form-control form-group">
+                    
+                    <div class="form-group">
+                        <label for="exe_mode">EXECUTION MODE</label>
+                        <select formControlName="exe_mode" class="form-control" id="exe_mode" required>
+                            <option *ngFor="let option of exe_mode_options" [ngValue]="option">
+                                {{ option.name }}
+                        </select>
+                        <!-- <small id="exe_mode_help" class="form-text text-muted">production or test mode</small> -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="candle_interval">CANDLE INTERVAL</label>
+                        <select formControlName="candle_interval" class="form-control" id="candle_interval" required>
+                            <option *ngFor="let option of candle_interval_options" [ngValue]="option">
+                                {{ option.name }}
+                        </select>
+                        <!-- <small id="exe_mode_help" class="form-text text-muted"></small> -->
+                    </div>
+
+                    <div class="form-group">
+                        <label for="current_orders">CHECK CURRENT ORDERS</label>
+                        <select formControlName="current_orders" class="form-control" id="current_orders" required>
+                            <option *ngFor="let option of current_orders_options" [ngValue]="option">
+                                {{ option.name }}
+                        </select>
+                        <small id="current_orders_help" class="form-text text-muted">
+                            Should existing orders be cancelled before execution?
+                        </small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="trade_rule" class="form-label">PLS PICK YOUR TRADE RULE IN JSON FORMAT<small *ngIf="trade_rule.invalid" class="input_error">*</small></label>                
+                        <input formControlName="trade_rule" name="trade_rule" class="form-control" accept=".json" type="file" id="trade_rule" (change)="onFileChange($event)" required>  
+                    </div>
+
+                </div>
+                  
+                <div class="form-group" *ngIf="newrun_active == false">
+                    <button type="submit" class="block">RUN</button>    
+                </div>
+
+            </form>
+
+            <form [formGroup]="login_newrun_form" (ngSubmit)="onSubmit_attach()" *ngIf="exe_mode == 'attach'" >
+                <div formGroupName="connection" class="form-control">
+                    
+                    <div class="form-group">
+                        <label for="host_url">Host<small *ngIf="attach_host_url.invalid" class="input_error">*</small></label>
+                        <input type="text" class="form-control" id="host_url" aria-describedby="host" formControlName="host_url" required>
+                        <!-- <small id="hostHelp" class="form-text text-muted"></small> -->
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="taapi_api_key">Taapi API Key<small *ngIf="attach_taapi_api_key.invalid" class="input_error">*</small></label>
+                        <input type="text" class="form-control" id="taapi_api_key" aria-describedby="taapi api key" formControlName="taapi_api_key" required>
+                        <!-- <small id="hostHelp" class="form-text text-muted"></small> -->
+                    </div>
+                    
+                </div>
+
+                <div class="form-group" *ngIf="attach_active == false">
+                    <button type="submit" class="block">Attach</button>    
+                </div>
+            </form>
+
+            <div class="form-group" *ngIf="newrun_active || attach_active">
+                <button type="button" class="block deattach">DEATTACH</button>
+                <button type="button" class="block stop">STOP</button>     
+            </div>
+
+        </div>
+    </div>
+</div>
