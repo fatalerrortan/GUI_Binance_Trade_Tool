@@ -105,8 +105,8 @@
             </form>
 
             <div class="form-group" *ngIf="newrun_active || attach_active">
-                <button type="button" class="block deattach">DEATTACH</button>
-                <button type="button" class="block stop">STOP</button>     
+                <button type="button" class="block deattach" (click)="deattach()">DEATTACH</button>
+                <button type="button" class="block stop" (click)="stop()">STOP</button>     
             </div>
 
         </div>
