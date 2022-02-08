@@ -108,10 +108,10 @@
                 <button type="button" class="block stop" (click)="stop()">STOP</button>     
             </div>
 
-            <div class="trade_rule text-center">
+            <div id="trade_rule_block" class="trade_rule text-center" *ngIf="trade_rule_block">
                 <h3>current uploaded trade rule</h3>
                 <div class="trade_rule_sell">
-                    <h5 style="color:blue">SELL</h5>
+                    <h5 style="color:blue"> >>SELL<< </h5>
                     <p>wenn both the average BTC typical price of last two periods and the current BTC price are lower than the below defined BTC prices, the followed altcoins will be sold.</p>
                     <ul class="list-group">
                         <li class="list-group-item" *ngFor="let rule of trade_rule_sell | keyvalue">
@@ -121,7 +121,7 @@
                             <!-- {{ rule | json }} -->
                             <ul class="list-group">
                                 <li class="list-group-item" *ngFor="let coin of rule.value.altcoin | keyvalue">
-                                    {{ coin.value * 100 }}% {{ coin.key }}coin
+                                    {{ coin.value * 100 }}% {{ coin.key }} will be sold
                                 </li>    
                             </ul>
 
@@ -129,18 +129,17 @@
                     </ul>
                 </div>
                 <div class="trade_rule_buy">
-                    <h5 style="color:blue">BUY</h5>
-                    <p>wenn both the average BTC typical price of last two periods and the current BTC price are lower than the below defined BTC prices, the followed altcoins will be sold.</p>
+                    <h5 style="color:blue"> >>BUY<< </h5>
+                    <p>When the price trend first breaks down one of the following ranges, and then returns to this range from bottom, and the current typical btc price is also within this range, the following coins will be purchased according to the defined ratio.</p>
                     <ul class="list-group">
                         <li class="list-group-item" *ngFor="let rule of trade_rule_buy | keyvalue">
-                            {{ rule.value.percentage }}
                             <b>Rule: {{ rule.key }}</b> 
                             <span>({{ rule.value.active == 1 ? "active" : "inactive" }})</span>
-                            <p>{{ rule.value.btc[0] }} and {{ rule.value.btc[1] }}</p>
-                            <p>{{ rule.value.percentage }}</p>
+                            <p>{{ rule.value.percentage * 100 }}% USDT deposit will be used to buy the following coins</p>
+                            <p>if {{ rule.value.btc[0] }}usdt < current BTC price < {{ rule.value.btc[1] }}usdt,</p>
                             <ul class="list-group">
                                 <li class="list-group-item" *ngFor="let coin of rule.value.altcoin | keyvalue">
-                                    {{ coin.key }} {{ coin.value * 100}}% uadt to buy {{ coin.key }}coin
+                                    {{ coin.value * 100}}% of {{ rule.value.percentage * 100 }}% usdt deposit will be used to buy {{ coin.key }}
                                 </li>    
                             </ul>
                         </li>

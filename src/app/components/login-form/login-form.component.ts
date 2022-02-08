@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BinanceTradeToolService } from '../../services/binance-trade-tool.service'
+import { BinanceTradeToolService } from '../../services/binance-trade-tool.service';
+// import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login-form',
@@ -15,7 +16,7 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
     // Called after the constructor and called  after the first ngOnChanges()
-    
+    // this.router.navigate(["/"]);
   }
 
   isNewRun_view: boolean = true;
@@ -29,6 +30,8 @@ export class LoginFormComponent implements OnInit {
   trade_rule_buy: any;
   trade_rule_source: any;
   server_url: any;
+
+  trade_rule_block: boolean = false;
 
   exe_mode_options = [
     {name: 'productive', abbrev: 'prod'},
@@ -121,6 +124,8 @@ export class LoginFormComponent implements OnInit {
 
         this.trade_rule_buy = JSON.parse(fileReader.result!.toString())["buy"];
         // this.trade_rule_buy = Object.keys(this.trade_rule_buy).map(key => this.trade_rule_buy[key]);
+        this.trade_rule_block = true;
+        // this.router.navigate([], { fragment: "trade_rule_block" });
         
         console.log(this.trade_rule_sell);
         console.log(this.trade_rule_buy);
