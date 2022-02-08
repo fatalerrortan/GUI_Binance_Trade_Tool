@@ -96,17 +96,56 @@
                         <input type="text" class="form-control" id="taapi_api_key" aria-describedby="taapi api key" formControlName="taapi_api_key" required>
                         <!-- <small id="hostHelp" class="form-text text-muted"></small> -->
                     </div>
-                    
                 </div>
 
                 <div class="form-group" *ngIf="attach_active == false">
                     <button type="submit" class="block">Attach</button>    
                 </div>
             </form>
-
+            
             <div class="form-group" *ngIf="newrun_active || attach_active">
                 <button type="button" class="block deattach" (click)="deattach()">DEATTACH</button>
                 <button type="button" class="block stop" (click)="stop()">STOP</button>     
+            </div>
+
+            <div class="trade_rule text-center">
+                <h3>current uploaded trade rule</h3>
+                <div class="trade_rule_sell">
+                    <h5 style="color:blue">SELL</h5>
+                    <p>wenn both the average BTC typical price of last two periods and the current BTC price are lower than the below defined BTC prices, the followed altcoins will be sold.</p>
+                    <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let rule of trade_rule_sell | keyvalue">
+                            <b>Rule: {{ rule.key }}</b> 
+                            <span>({{ rule.value.active == 1 ? "active" : "inactive" }})</span>
+                            <p><b>{{ rule.value.btc }}</b>usdt</p> 
+                            <!-- {{ rule | json }} -->
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let coin of rule.value.altcoin | keyvalue">
+                                    {{ coin.value * 100 }}% {{ coin.key }}coin
+                                </li>    
+                            </ul>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class="trade_rule_buy">
+                    <h5 style="color:blue">BUY</h5>
+                    <p>wenn both the average BTC typical price of last two periods and the current BTC price are lower than the below defined BTC prices, the followed altcoins will be sold.</p>
+                    <ul class="list-group">
+                        <li class="list-group-item" *ngFor="let rule of trade_rule_buy | keyvalue">
+                            {{ rule.value.percentage }}
+                            <b>Rule: {{ rule.key }}</b> 
+                            <span>({{ rule.value.active == 1 ? "active" : "inactive" }})</span>
+                            <p>{{ rule.value.btc[0] }} and {{ rule.value.btc[1] }}</p>
+                            <p>{{ rule.value.percentage }}</p>
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let coin of rule.value.altcoin | keyvalue">
+                                    {{ coin.key }} {{ coin.value * 100}}% uadt to buy {{ coin.key }}coin
+                                </li>    
+                            </ul>
+                        </li>
+                      </ul>
+                </div>
             </div>
 
         </div>

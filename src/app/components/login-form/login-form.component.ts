@@ -25,6 +25,8 @@ export class LoginFormComponent implements OnInit {
   attach_active: boolean = false;
 
   exe_mode: string = "newrun";
+  trade_rule_sell: any;
+  trade_rule_buy: any;
   trade_rule_source: any;
   server_url: any;
 
@@ -111,6 +113,18 @@ export class LoginFormComponent implements OnInit {
     const element = event.currentTarget as HTMLInputElement;
     if (element.files!.length > 0) {
       this.trade_rule_source = element.files![0];
+      const fileReader = new FileReader();
+      fileReader.readAsText(this.trade_rule_source, "UTF-8");
+      fileReader.onload = () => {
+        this.trade_rule_sell = JSON.parse(fileReader.result!.toString())["sell"];
+        // this.trade_rule_sell = Object.keys(this.trade_rule_sell).map(key => this.trade_rule_sell[key]);
+
+        this.trade_rule_buy = JSON.parse(fileReader.result!.toString())["buy"];
+        // this.trade_rule_buy = Object.keys(this.trade_rule_buy).map(key => this.trade_rule_buy[key]);
+        
+        console.log(this.trade_rule_sell);
+        console.log(this.trade_rule_buy);
+      }
     }
   }
 
@@ -184,5 +198,9 @@ export class LoginFormComponent implements OnInit {
   deattach(){
     alert("deattach");
     return console.log("deattach");
+  }
+
+  inactive_color(){
+    console.log("called");
   }
 }
