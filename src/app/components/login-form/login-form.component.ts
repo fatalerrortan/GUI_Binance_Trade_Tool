@@ -55,7 +55,7 @@ export class LoginFormComponent implements OnInit {
     {name: 'yes', abbrev: 'yes'},
     {name: 'no', abbrev: 'no'}
   ];
-  // http://127.0.0.1:9898
+
   host_url = new FormControl("http://127.0.0.1:9898", {validators: Validators.required, updateOn: 'submit'});
   taapi_api_key = new FormControl(null, {validators: Validators.required, updateOn: 'submit'});
   binance_api_key = new FormControl(null, {validators: Validators.required, updateOn: 'submit'});
@@ -166,6 +166,7 @@ export class LoginFormComponent implements OnInit {
         if (result["status"] == "ok") {
           this.attach_active = false;
           this.newrun_active = true;
+          alert(result["run_id"]);
         }else {
           alert(result["body"]);
         }
